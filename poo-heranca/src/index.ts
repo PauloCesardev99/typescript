@@ -1,5 +1,5 @@
-class Conta{ //Public acessado de qualquer lugar // private acessado somente na sua própria classe // protected acessado na própria classe e nas filhos.
-    protected numero:number   
+ abstract class Conta{ //Public acessado de qualquer lugar // private acessado somente na sua própria classe // protected acessado na própria classe e nas filhos.
+    private readonly numero:number   
 
     protected titular:string
 
@@ -23,8 +23,13 @@ class Conta{ //Public acessado de qualquer lugar // private acessado somente na 
         console.log(`Numero: ${this.numero}`)
     }
 
-    public Saldo():number{
+    public get Saldo():number{
      return  this.saldo
+    }
+
+    public set Saldo(s){ //setter = setar um valor
+
+        this.saldo = s;
     }
 
     protected deposito(valor:number){
@@ -38,10 +43,19 @@ class Conta{ //Public acessado de qualquer lugar // private acessado somente na 
              this.saldo-=valor
         }
     }
-}
-            //herdando
-class ContaPF extends Conta{
 
+
+}
+
+    interface tributo{
+        taxatributo:number;
+        taxar(t:number):void;
+
+    }
+            //herdando
+class ContaPF extends Conta implements tributo{
+
+    taxatributo = 20
     cpf:number
 
     constructor(cpf:number,  t:string){
@@ -69,11 +83,16 @@ class ContaPF extends Conta{
     }
 
     public SaquePF(valor:number):void{
-        if(valor > super.Saldo() || valor <=0){
+        if(valor > super.Saldo || valor <=0){
             console.log("Não pode sacar")
         }else{
            super.Saque(valor)
         }
+    }
+
+    
+   public taxar(t: number): void {
+        this.taxatributo *= t
     }
 
 }
@@ -109,7 +128,7 @@ class ContaPJ extends Conta{
     }
 
     public SaquePJ(valor:number):void{
-        if(valor > super.Saldo() || valor <=0){
+        if(valor > super.Saldo || valor <=0){
            console.log(`Não pode sacar`) 
         }else{
            super.Saque(valor)
@@ -126,7 +145,9 @@ const conta_2 = new ContaPJ(431241, "Bruno")
 
 
 conta_1.deposito(10)
-conta_1.SaquePF(10)
+
+conta_1.Saldo = 25
+console.log(conta_1.Saldo) //Saldo virou propriedade
 
 
 

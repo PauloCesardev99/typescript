@@ -15,8 +15,11 @@ class Conta {
         console.log(`Titular: ${this.titular}`);
         console.log(`Numero: ${this.numero}`);
     }
-    Saldo() {
+    get Saldo() {
         return this.saldo;
+    }
+    set Saldo(s) {
+        this.saldo = s;
     }
     deposito(valor) {
         `Você Deposito: ${this.saldo += valor}`;
@@ -55,7 +58,7 @@ class ContaPF extends Conta {
         }
     }
     SaquePF(valor) {
-        if (valor > super.Saldo() || valor <= 0) {
+        if (valor > super.Saldo || valor <= 0) {
             console.log("Não pode sacar");
         }
         else {
@@ -87,7 +90,7 @@ class ContaPJ extends Conta {
         }
     }
     SaquePJ(valor) {
-        if (valor > super.Saldo() || valor <= 0) {
+        if (valor > super.Saldo || valor <= 0) {
             console.log(`Não pode sacar`);
         }
         else {
@@ -98,4 +101,5 @@ class ContaPJ extends Conta {
 const conta_1 = new ContaPF(532479276, "Paulo");
 const conta_2 = new ContaPJ(431241, "Bruno");
 conta_1.deposito(10);
-conta_1.SaquePF(10);
+conta_1.Saldo = 25;
+console.log(conta_1.Saldo); //Saldo virou propriedade
